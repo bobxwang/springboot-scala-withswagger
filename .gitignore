@@ -1,6 +1,27 @@
 *.class
 *.log
 
+# build application files
+*.apk
+*.ap_
+
+# file for the dex VM
+*.dex
+
+
+# Eclipse project files
+.classpath
+.project
+
+# Intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+bin/
+gen/
+
 # sbt specific
 .cache
 .history
