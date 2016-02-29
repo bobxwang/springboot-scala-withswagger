@@ -22,6 +22,9 @@ class SampleConfig extends CommandLineRunner {
   @Autowired
   val objectMapper: ObjectMapper = null
 
+  /**
+   * 只有使用swagger的基础上才能导入此实例
+   */
   @Autowired
   val jsonSerializer: JsonSerializer = null
 

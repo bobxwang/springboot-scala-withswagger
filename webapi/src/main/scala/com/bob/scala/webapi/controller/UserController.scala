@@ -39,7 +39,7 @@ class BusinessExceptionResponse
  */
 @RestController
 @RequestMapping(value = Array("users/v1"))
-@Api("用户相关接口")
+@Api(value = "用户相关接口", description = "用户相关接口")
 class UserController {
 
   @RequestMapping(value = Array("lists"), method = Array(RequestMethod.GET))
@@ -62,6 +62,7 @@ class UserController {
   }
 
   @RequestMapping(value = Array("lists"), method = Array(RequestMethod.POST))
+  @ApiOperation("创建一个用户")
   def createUser(@Valid @RequestBody param: AddUserParam): User = {
     User(param.name, param.age, param.address,
       param.age)
