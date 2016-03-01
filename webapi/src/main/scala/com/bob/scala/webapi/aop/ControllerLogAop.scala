@@ -2,6 +2,7 @@ package com.bob.scala.webapi.aop
 
 import java.lang.reflect.Method
 
+import com.bob.scala.webapi.utils.LoggerObject
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.{Aspect, Around}
@@ -17,10 +18,8 @@ import com.bob.scala.webapi.utils.StringImplicit.RichFormatter
  */
 @Component
 @Aspect
-class ControllerLogAop {
-
-  val LOG: Logger = LoggerFactory.getLogger(classOf[ControllerLogAop])
-
+class ControllerLogAop extends LoggerObject {
+  
   @Autowired
   var objectMapper: ObjectMapper = _
 
@@ -31,7 +30,7 @@ class ControllerLogAop {
     val className = proceedingJoinPoint.getTarget.getClass.getName
 
     val start = System.currentTimeMillis()
-    LOG.info("executing controller %s method %s request params %s and time is %s".format(className, method.getName,
+    LOGGER.info("executing controller %s method %s request params %s and time is %s".format(className, method.getName,
       objectMapper.writeValueAsString(proceedingJoinPoint.getArgs), start))
 
     var result: Object = null
@@ -44,8 +43,8 @@ class ControllerLogAop {
       }
     }
     val end = System.currentTimeMillis()
-    if (LOG.isInfoEnabled) {
-      LOG.info("executed controller #{controllername} method #{methodname} response #{response} and total time is #{time} ms"
+    if (LOGGER.isInfoEnabled) {
+      LOGGER.info("executed controller #{controllername} method #{methodname} response #{response} and total time is #{time} ms"
         .richFormat(
           Map("controllername" -> className,
             "methodname" -> method.getName,

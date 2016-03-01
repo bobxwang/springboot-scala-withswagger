@@ -12,6 +12,9 @@ import springfox.documentation.spring.web.json.JsonSerializer
  * Created by bob on 16/2/16.
  */
 object ScalaApplication extends App {
+  /**
+   * args: _ *:此标注告诉编译器把args中的每个元素当作参数，而不是当作一个当一的参数传递
+   */
   SpringApplication.run(classOf[SampleConfig], args: _ *)
 }
 
@@ -20,7 +23,7 @@ object ScalaApplication extends App {
 class SampleConfig extends CommandLineRunner {
 
   @Autowired
-  val objectMapper: ObjectMapper = null
+  var objectMapper: ObjectMapper = _
 
   /**
    * 只有使用swagger的基础上才能导入此实例
@@ -37,5 +40,7 @@ class SampleConfig extends CommandLineRunner {
     val aUser = new User("c", 4, "a44", 4)
     println(objectMapper.writeValueAsString(aUser))
     println(jsonSerializer.toJson(aUser).value())
+    val map = Map("message" -> "fucktest")
+    println(objectMapper.writeValueAsString(map))
   }
 }

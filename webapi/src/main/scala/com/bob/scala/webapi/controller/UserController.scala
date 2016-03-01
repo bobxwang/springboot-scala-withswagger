@@ -4,6 +4,7 @@ import javax.validation.Valid
 import javax.validation.constraints.{Max, Min, NotNull}
 
 import io.swagger.annotations._
+import org.springframework.hateoas.VndErrors
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation._
 
@@ -31,9 +32,6 @@ case class AddUserParam() {
   var sex: Int = _;
 }
 
-class BusinessExceptionResponse
-
-
 /**
  * Created by bob on 16/2/27.
  */
@@ -46,9 +44,9 @@ class UserController {
   @ApiOperation(value = "列出系统中所有用户信息")
   @ResponseStatus(HttpStatus.OK)
   @ApiResponses(Array(
-    new ApiResponse(code = 401, message = "无权限操作", response = classOf[BusinessExceptionResponse]),
-    new ApiResponse(code = 404, message = "没有处理器", response = classOf[BusinessExceptionResponse]),
-    new ApiResponse(code = 204, message = "记录不存在")))
+    new ApiResponse(code = 401, message = "无权限操作", response = classOf[VndErrors]),
+    new ApiResponse(code = 404, message = "没有处理器", response = classOf[VndErrors]),
+    new ApiResponse(code = 204, message = "记录不存在", response = classOf[VndErrors])))
   def lists(): java.util.List[User] = {
     val aUser = new User("c", 4, "a44", 4)
     val aList = List(new User("a", 1, "a11", 1), new User("b", 2, "b22", 2), new User("c", 3, "c33", 3))
@@ -58,6 +56,9 @@ class UserController {
   @RequestMapping(value = Array("lists/{name}"), method = Array(RequestMethod.GET))
   @ApiOperation("根据姓名查找用户")
   def findByName(@PathVariable("name") @ApiParam("用户姓名") name: String): User = {
+    if (name == "abcd") {
+      throw new IllegalArgumentException("参数出错")
+    }
     User(name, 4, "a44", 4)
   }
 
