@@ -4,6 +4,7 @@ import java.io.IOException
 import java.lang.NumberFormatException
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 
+import com.bob.scala.webapi.exception.{ServerException, ClientException}
 import com.bob.scala.webapi.utils.LoggerObject
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,11 +46,12 @@ class RestErrorHandler extends ResponseEntityExceptionHandler with LoggerObject 
 
     logError(ex, request);
 
-    val vndErrors: VndErrors = new VndErrors(ex.getClass.getSimpleName, ex.getMessage)
-    if (ex.isInstanceOf[NumberFormatException]) {
-      response.setStatus(400)
-    } else {
-      response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
+    val message = if (ex.getMessage == null) "null" else ex.getMessage
+    val vndErrors: VndErrors = new VndErrors(ex.getClass.getSimpleName, message)
+    ex match {
+      case ClientException(err, state) => response.setStatus(state)
+      case ServerException(err, state) => response.setStatus(state)
+      case _ => response.setStatus(500)
     }
 
     new ResponseEntity[VndErrors](vndErrors, HttpStatus.valueOf(response.getStatus()))

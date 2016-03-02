@@ -3,6 +3,7 @@ package com.bob.scala.webapi.controller
 import javax.validation.Valid
 import javax.validation.constraints.{Max, Min, NotNull}
 
+import com.bob.scala.webapi.exception.{ServerException, ClientException}
 import io.swagger.annotations._
 import org.springframework.hateoas.VndErrors
 import org.springframework.http.HttpStatus
@@ -55,7 +56,12 @@ class UserController {
 
   @RequestMapping(value = Array("lists/{name}"), method = Array(RequestMethod.GET))
   @ApiOperation("根据姓名查找用户")
+  @throws(classOf[ClientException])
+  @throws(classOf[ServerException])
   def findByName(@PathVariable("name") @ApiParam("用户姓名") name: String): User = {
+    if (name == "abcde") {
+      throw new ClientException("参数非法")
+    }
     if (name == "abcd") {
       throw new IllegalArgumentException("参数出错")
     }
@@ -64,7 +70,11 @@ class UserController {
 
   @RequestMapping(value = Array("lists"), method = Array(RequestMethod.POST))
   @ApiOperation("创建一个用户")
+  @throws(classOf[ServerException])
   def createUser(@Valid @RequestBody param: AddUserParam): User = {
+    if (param.name == "fuck") {
+      throw ServerException(s"server error,${param.name}")
+    }
     User(param.name, param.age, param.address,
       param.age)
   }
