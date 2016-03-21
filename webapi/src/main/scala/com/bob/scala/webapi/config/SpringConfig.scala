@@ -1,18 +1,16 @@
 package com.bob.scala.webapi.config
 
 import java.io.IOException
-import java.lang.NumberFormatException
-import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
+import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 
-import com.bob.scala.webapi.exception.{ServerException, ClientException}
+import com.bob.scala.webapi.exception.{ClientException, ServerException}
 import com.bob.scala.webapi.utils.LoggerObject
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.MessageSource
-import org.springframework.context.annotation.{Import, Configuration, Lazy}
+import org.springframework.context.annotation.Import
 import org.springframework.hateoas.VndErrors
-import org.springframework.http.{ResponseEntity, HttpStatus, HttpHeaders}
-import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, RestController, ControllerAdvice}
+import org.springframework.http.{HttpHeaders, HttpStatus, ResponseEntity}
+import org.springframework.web.bind.annotation.{ControllerAdvice, ExceptionHandler, ResponseBody, RestController}
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.{AbstractJsonpResponseBodyAdvice, ResponseEntityExceptionHandler}
 
@@ -44,7 +42,7 @@ class RestErrorHandler extends ResponseEntityExceptionHandler with LoggerObject 
   def handleRequests(request: HttpServletRequest, response: HttpServletResponse,
                      ex: Exception): ResponseEntity[VndErrors] = {
 
-    logError(ex, request);
+    logError(ex, request)
 
     val message = if (ex.getMessage == null) "null" else ex.getMessage
     val vndErrors: VndErrors = new VndErrors(ex.getClass.getSimpleName, message)

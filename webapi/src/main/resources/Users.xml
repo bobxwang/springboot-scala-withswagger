@@ -1,0 +1,20 @@
+<users>
+    <user id="1">
+        <name>fuck1</name>
+        <age>12</age>
+        <address>xihu</address>
+        <sex>1</sex>
+    </user>
+    <user id="2">
+        <name>fuck2</name>
+        <age>12</age>
+        <address>xihuarea</address>
+        <sex>1</sex>
+    </user>
+    <user id="3">
+        <name>abcd</name>
+        <age>13</age>
+        <address>fuckarea</address>
+        <sex>2</sex>
+    </user>
+</users>

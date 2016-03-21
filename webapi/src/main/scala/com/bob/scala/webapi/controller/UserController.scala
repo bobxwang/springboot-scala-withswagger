@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation._
 
 import scala.collection.JavaConverters._
+import scala.concurrent.{Promise, Future}
 
 @ApiModel("用户基本属性")
 case class User(@ApiModelProperty("姓名") name: String,
@@ -54,10 +55,14 @@ class UserController {
     aList.+:(aUser).asJava
   }
 
-  @RequestMapping(value = Array("lists/{name}"), method = Array(RequestMethod.GET))
-  @ApiOperation("根据姓名查找用户")
+  /**
+   * spring中全局出错处理器其实是由java触发的，那么此时需要通过注解来告诉会有哪些异常，
+   * 要不然所有的ex类型都会成为UndeclaredThrowableException，就不能采用模式匹配
+   */
   @throws(classOf[ClientException])
   @throws(classOf[ServerException])
+  @RequestMapping(value = Array("lists/{name}"), method = Array(RequestMethod.GET))
+  @ApiOperation("根据姓名查找用户")
   def findByName(@PathVariable("name") @ApiParam("用户姓名") name: String): User = {
     if (name == "abcde") {
       throw new ClientException("参数非法")
