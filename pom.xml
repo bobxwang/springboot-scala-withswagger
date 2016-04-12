@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <name>bootspring-scala-parent</name>
     <description>Scala Demo project for Spring Boot With Swagger</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,12 +19,16 @@
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <scala.version>2.11.6</scala.version>
         <springfox.version>2.3.1</springfox.version>
+        <docker.image.prefix>bob.scala</docker.image.prefix>
+        <docker.plugin.version>0.4.5</docker.plugin.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,8 +79,8 @@
         </dependency>
         <!-- springfox for swagger is end -->
 
-
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
