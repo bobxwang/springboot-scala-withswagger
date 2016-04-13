@@ -1,4 +1,4 @@
-FROM java:7
+FROM centos:latest
 
 MAINTAINER Bob.Wang
 
