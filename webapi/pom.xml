@@ -30,7 +30,8 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.5</version>
+                <!--最新版通不过，最新版本默认好后会进行上传-->
+                <version>0.2.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
