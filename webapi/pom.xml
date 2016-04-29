@@ -27,10 +27,10 @@
     <build>
         <finalName>springboot-scala-withswagger</finalName>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <!--最新版通不过，最新版本默认好后会进行上传-->
+                &lt;!&ndash;最新版通不过，最新版本默认好后会进行上传&ndash;&gt;
                 <version>0.2.3</version>
                 <executions>
                     <execution>
@@ -41,12 +41,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--<dockerHost>tcp://localhost:2376</dockerHost>-->
+                    &lt;!&ndash;<dockerHost>tcp://localhost:2376</dockerHost>&ndash;&gt;
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
-                    <!--we tell the plugin the Dockerfile file path-->
+                    &lt;!&ndash;we tell the plugin the Dockerfile file path&ndash;&gt;
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
@@ -56,7 +56,7 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
