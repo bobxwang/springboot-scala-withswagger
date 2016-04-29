@@ -71,8 +71,8 @@ class RedisDistributeLock(jedisCluster: JedisCluster) extends DistributeLock {
    */
   override def tryLock(lock: String, lockExpireTime: Long, requestTimeout: Long): Boolean = {
     require(lock != null && lock.trim.length > 0, "lock invalid")
-    require(lockExpireTime != null && lockExpireTime > 0)
-    require(requestTimeout != null && requestTimeout > 0)
+    require(lockExpireTime > 0)
+    require(requestTimeout > 0)
 
     var requireTimeout = requestTimeout
     while (requireTimeout > 0) {
