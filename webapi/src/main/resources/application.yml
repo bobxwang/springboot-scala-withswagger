@@ -1,3 +1,9 @@
 swagger:
   ui:
     enable: true
+
+helloworld:
+  message: fuck-62-u
+
+server:
+  port: 9999

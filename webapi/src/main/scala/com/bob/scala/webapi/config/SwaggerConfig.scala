@@ -2,11 +2,10 @@ package com.bob.scala.webapi.config
 
 import javax.annotation.PostConstruct
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import org.springframework.beans.factory.annotation.{Value, Autowired}
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationListener
-import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.{Bean, Scope}
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors.regex
 import springfox.documentation.schema.configuration.ObjectMapperConfigured
@@ -35,6 +34,7 @@ class SwaggerConfig {
    * @return
    */
   @Bean
+  @Scope("singletion")
   def userDocketFactory: Docket = {
     val docket = new Docket(DocumentationType.SWAGGER_2)
       .apiInfo(apiInfo)
