@@ -2,7 +2,7 @@
 
 a basic guide using springboot in scala combine swagger
 
-# Preposition
+# Prerequisite
 
 * [Spring-boot](http://projects.spring.io/spring-boot)
 * [Scala](http://www.scala-lang.org)
