@@ -7,3 +7,11 @@ helloworld:
 
 server:
   port: 9999
+
+spring:
+  rabbitmq:
+    username: root
+    password: root
+    virtual-host: ****
+    host: ***
+    port: ***
