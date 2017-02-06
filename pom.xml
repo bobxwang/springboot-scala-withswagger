@@ -67,6 +67,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
         <!--add scala dependency begin-->
         <dependency>
             <groupId>org.scala-lang</groupId>

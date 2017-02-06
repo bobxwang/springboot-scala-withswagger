@@ -2,34 +2,46 @@ package com.bob.scala.webapi.controller
 
 import java.util.concurrent.{Callable, Executors, TimeUnit}
 
+import com.bob.scala.webapi.service.HelperService
 import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, RequestMethod, RestController}
 import org.springframework.web.context.request.async.{DeferredResult, WebAsyncTask}
 
 /**
+  * 异步例子,返回callable,deferredresult,webasynctask
+  *
   * Created by bob on 17/2/4.
   */
 @RestController
 @RequestMapping(value = Array("callable/v1"))
 class CallableController {
 
-  val LOGGER: Logger = LoggerFactory.getLogger(getClass)
+  private val LOGGER: Logger = LoggerFactory.getLogger(getClass)
+
+  @Autowired
+  private val helperService: HelperService = null
+
+  @RequestMapping(value = Array("rs/nocallable/{name}"), method = Array(RequestMethod.GET))
+  def nocallable(@PathVariable("name") name: String): String = {
+    helperService.handlerInput(name)
+  }
 
   @RequestMapping(value = Array("rs/callable/{name}"), method = Array(RequestMethod.GET))
   def callable(@PathVariable("name") name: String): Callable[String] = {
     LOGGER.info(s"rs/callable/${name} begin to process}")
     new Callable[String] {
       def call() = {
-        Thread.sleep(2000)
+        val r = helperService.handlerInput(name)
         LOGGER.info(s"rs/callable/${name} stop to process}")
-        s"${name} is returned"
+        r
       }
     }
   }
 
   @RequestMapping(value = Array("rs/defferredrs/{name}"), method = Array(RequestMethod.GET))
   def deferredResult(@PathVariable("name") name: String): DeferredResult[String] = {
-    val differredrs = new DeferredResult[String](1000L)
+    val differredrs = new DeferredResult[String](4000L)
     LOGGER.info(s"rs/defferredrs/${name} begin to process}")
     LongTimeAsyncCallService.makeRemoteCallAndUnknownWhenFinish(new LongTimeTaskCallback(name) {
       def callback(result: Any) = {
@@ -48,9 +60,9 @@ class CallableController {
     LOGGER.info("/rs/webasynctask begin to process")
     new WebAsyncTask[String](new Callable[String] {
       def call() = {
-        Thread.sleep(3000)
+        val r = helperService.handlerInput(name)
         LOGGER.info("rs/webasynctask stop to process")
-        s"${name} is invoked done"
+        r
       }
     })
   }
@@ -65,10 +77,9 @@ class CallableController {
     def makeRemoteCallAndUnknownWhenFinish(callback: LongTimeTaskCallback) {
       scheduler.schedule(new Runnable {
         def run() = {
-          Thread.sleep(2000)
-          callback.callback(s"${callback.parm.toString} is done")
+          callback.callback(s"${helperService.handlerInput(callback.parm.toString)} is done")
         }
-      }, 3, TimeUnit.SECONDS)
+      }, 1, TimeUnit.SECONDS)
     }
   }
 

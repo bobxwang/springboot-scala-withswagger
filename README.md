@@ -1,6 +1,8 @@
 # Description 
 
-a basic guide using springboot in scala combine swagger
+* a basic guide using spring boot in scala combine swagger
+* update jdk version to 1.8, for using lambda
+* action can return the rx.Observable, see the **RxJavaController**
 
 # Prerequisite
 
@@ -9,6 +11,7 @@ a basic guide using springboot in scala combine swagger
 * [Swagger](http://swagger.io)
 * [Maven](http://maven.apache.org)
 * [Docker](http://www.docker.com)
+* [RxJava](https://github.com/ReactiveX/RxJava)
 
 # Maven/sbt
 why this using maven not sbt,just for convenient because we can inhert 'spring-boot-starter-parent',
