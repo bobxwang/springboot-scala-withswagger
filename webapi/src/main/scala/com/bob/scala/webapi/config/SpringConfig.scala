@@ -15,11 +15,10 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.{AbstractJsonpResponseBodyAdvice, ResponseEntityExceptionHandler}
 
 /**
- * Created by bob on 16/2/29.
- */
+  * Created by bob on 16/2/29.
+  */
 @Import(value = Array(classOf[RestErrorHandler], classOf[JsonpAdvice]))
-class SpringConfig extends LoggerObject {
-
+class SpringConfig {
 }
 
 @ControllerAdvice(annotations = Array(classOf[RestController]))
@@ -28,8 +27,8 @@ class JsonpAdvice extends AbstractJsonpResponseBodyAdvice("callback", "jsonp") {
 }
 
 /**
- * 全局统一出错处理
- */
+  * 全局统一出错处理
+  */
 @ControllerAdvice(annotations = Array(classOf[RestController]))
 class RestErrorHandler extends ResponseEntityExceptionHandler with LoggerObject {
 
@@ -56,14 +55,15 @@ class RestErrorHandler extends ResponseEntityExceptionHandler with LoggerObject 
   }
 
   /**
-   * 重载方法加入日志
-   * @param ex
-   * @param body
-   * @param headers
-   * @param status
-   * @param request
-   * @return
-   */
+    * 重载方法加入日志
+    *
+    * @param ex
+    * @param body
+    * @param headers
+    * @param status
+    * @param request
+    * @return
+    */
   override def handleExceptionInternal(ex: Exception, body: scala.Any,
                                        headers: HttpHeaders, status: HttpStatus,
                                        request: WebRequest): ResponseEntity[AnyRef] = {

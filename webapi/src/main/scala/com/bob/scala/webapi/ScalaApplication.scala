@@ -19,6 +19,10 @@ object ScalaApplication extends App {
   SpringApplication.run(classOf[SampleConfig], args: _ *)
 }
 
+class ScalaApplication {
+
+}
+
 @SpringBootApplication
 @RestController
 @ComponentScan(value = Array(
