@@ -18,9 +18,16 @@ class HelperService {
     Thread.sleep(1000 * 2)
     val sb: StringBuilder = new StringBuilder(param)
     var value: String = MDC.get(MdcConstans.MDC_REMOTE_IP)
-    if (!StringUtils.isEmpty(value)) sb.append("\r remoteip is " + value)
+    if (!StringUtils.isEmpty(value)) {
+      sb.append("\r remoteip is " + value)
+    } else {
+      sb.append("\r remoteip is empty")
+    }
     value = MDC.get(MdcConstans.MDC_ClientRequest_ID)
     if (!StringUtils.isEmpty(value)) sb.append("\r clientid is " + value)
+    else {
+      sb.append("\r clientid is empty")
+    }
     LOGGER.info(s"handlerInputParm/${param} stop to process")
     sb.toString
   }

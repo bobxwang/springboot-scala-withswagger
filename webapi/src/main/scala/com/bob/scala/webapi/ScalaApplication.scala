@@ -1,18 +1,24 @@
 package com.bob.scala.webapi
 
+import com.bob.java.webapi.handler.MdcPropagatingOnScheduleAction
 import com.bob.scala.webapi.controller.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.{CommandLineRunner, SpringApplication}
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.web.bind.annotation.{RequestMapping, RequestMethod, RestController}
+import rx.plugins.RxJavaHooks
 import springfox.documentation.spring.web.json.JsonSerializer
 
 /**
   * Created by bob on 16/2/16.
   */
 object ScalaApplication extends App {
+
+  RxJavaHooks.setOnScheduleAction(new MdcPropagatingOnScheduleAction)
+  
   /**
     * args: _ *:此标注告诉编译器把args中的每个元素当作参数，而不是当作一个当一的参数传递
     */
@@ -28,6 +34,7 @@ class ScalaApplication {
 @ComponentScan(value = Array(
   "com.bob.scala.*", "com.bob.java.webapi.*"
 ))
+@EnableAsync
 class SampleConfig extends CommandLineRunner {
 
   @Autowired

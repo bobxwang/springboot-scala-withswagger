@@ -2,8 +2,9 @@ package com.bob.scala.webapi.controller
 
 import java.util.concurrent.{Callable, Executors, TimeUnit}
 
+import com.bob.java.webapi.spextension.MDCAwareCallable
 import com.bob.scala.webapi.service.HelperService
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.{Logger, LoggerFactory, MDC}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, RequestMethod, RestController}
 import org.springframework.web.context.request.async.{DeferredResult, WebAsyncTask}
@@ -75,11 +76,11 @@ class CallableController {
     private val scheduler = Executors.newScheduledThreadPool(4)
 
     def makeRemoteCallAndUnknownWhenFinish(callback: LongTimeTaskCallback) {
-      scheduler.schedule(new Runnable {
+      scheduler.schedule(MDCAwareCallable.wrap(new Runnable {
         def run() = {
           callback.callback(s"${helperService.handlerInput(callback.parm.toString)} is done")
         }
-      }, 1, TimeUnit.SECONDS)
+      }, MDC.getCopyOfContextMap), 1, TimeUnit.SECONDS)
     }
   }
 
