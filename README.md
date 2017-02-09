@@ -1,8 +1,9 @@
 # Description 
 
-* a basic guide using spring boot in scala combine swagger
-* update jdk version to 1.8, for using lambda
-* action can return the rx.Observable, see the **RxJavaController**
+* A basic guide using spring boot in scala combine swagger
+* Update jdk version to 1.8, for using lambda
+* Action can return the rx.Observable, like return Callable Or DeferredResult see the **RxJavaController**
+* When controller return Callable/DeferredResult/Observable, Support MDC value to deliver
 
 # Prerequisite
 
