@@ -101,6 +101,13 @@
         </dependency>
         <!-- springfox for swagger is end -->
 
+        <dependency>
+            <groupId>org.inferred</groupId>
+            <artifactId>freebuilder</artifactId>
+            <version>1.13.2</version>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
