@@ -9,9 +9,17 @@ server:
   port: 9999
 
 spring:
-  rabbitmq:
-    username: root
-    password: root
-    virtual-host: ****
-    host: ***
-    port: ***
+  thymeleaf:
+    cache: true
+
+management:
+  security:
+    enabled: false
+
+#spring:
+#  rabbitmq:
+#    username: root
+#    password: root
+#    virtual-host: /order_eventstream
+#    host: 10.0.40.151
+#    port: 5672

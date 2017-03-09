@@ -29,6 +29,10 @@
         <docker.image.prefix>bob.scala</docker.image.prefix>
         <docker.plugin.version>0.4.5</docker.plugin.version>
         <undertow.version>1.3.10.Final</undertow.version>
+        <!-- default version is 2.* -->
+        <thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-java8time.version>3.0.0.RELEASE</thymeleaf-extras-java8time.version>
     </properties>
 
     <dependencies>
@@ -61,6 +65,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets
 
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.amqp.core.Message
-import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.support.converter.SimpleMessageConverter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -18,14 +17,10 @@ class ObjMsgHandler {
   private val LOGGER: Logger = LoggerFactory.getLogger(classOf[ObjMsgHandler])
   @Autowired private val simpleMessageConverter: SimpleMessageConverter = null
 
-  @RabbitListener(queues = Array("ordera")) def handlerA(message: Message) {
+  //  @RabbitListener(queues = Array("ordera"))
+  def handlerA(message: Message) {
     val m = message2String(message)
     LOGGER.info(s"aaaa - ${m}")
-  }
-
-  @RabbitListener(queues = Array("orderh")) def handlerH(message: Message) {
-    val m = message2String(message)
-    LOGGER.info(s"hhhh - ${m}")
   }
 
   def message2String(message: Message): String = {

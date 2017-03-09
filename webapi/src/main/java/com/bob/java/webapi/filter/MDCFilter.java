@@ -28,15 +28,27 @@ public class MDCFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String path = urlPathHelper.getPathWithinApplication(request);
+        if (path.contains("webjars") || path.contains("swagger")
+                || path.contains("api-docs") || path.contains("configuration")
+                || path.contains("images")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         handlerRemoteIp(request);
         handlerClientRequestId(request);
 
         try {
-            log.info(urlPathHelper.getPathWithinApplication(request) + " -> 开始客户端请求ip -> " + MDC.get(MdcConstans.MDC_REMOTE_IP) + " 标识符是 -> " + MDC.get(MdcConstans.MDC_ClientRequest_ID));
+            log.info(path + " -> 开始客户端请求ip -> " + MDC.get(MdcConstans.MDC_REMOTE_IP) + " 标识符是 -> " + MDC.get(MdcConstans.MDC_ClientRequest_ID));
             filterChain.doFilter(request, response);
         } finally {
-            MDC.clear();
-            log.info(urlPathHelper.getPathWithinApplication(request) + " -> 结束客户端请求ip -> " + MDC.get(MdcConstans.MDC_REMOTE_IP) + " 标识符是 -> " + MDC.get(MdcConstans.MDC_ClientRequest_ID));
+            try {
+                log.info(path + " -> 结束客户端请求ip -> " + MDC.get(MdcConstans.MDC_REMOTE_IP) + " 标识符是 -> " + MDC.get(MdcConstans.MDC_ClientRequest_ID));
+                MDC.clear();
+            } finally {
+                MDC.clear();
+            }
         }
     }
 

@@ -1,14 +1,19 @@
 package com.bob.scala.webapi
 
+import java.time.LocalDateTime
+
 import com.bob.java.webapi.handler.MdcPropagatingOnScheduleAction
 import com.bob.scala.webapi.controller.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
 import org.springframework.boot.{CommandLineRunner, SpringApplication}
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.scheduling.annotation.EnableAsync
-import org.springframework.web.bind.annotation.{RequestMapping, RequestMethod, RestController}
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.{GetMapping, ResponseBody}
 import rx.plugins.RxJavaHooks
 import springfox.documentation.spring.web.json.JsonSerializer
 
@@ -18,7 +23,7 @@ import springfox.documentation.spring.web.json.JsonSerializer
 object ScalaApplication extends App {
 
   RxJavaHooks.setOnScheduleAction(new MdcPropagatingOnScheduleAction)
-  
+
   /**
     * args: _ *:此标注告诉编译器把args中的每个元素当作参数，而不是当作一个当一的参数传递
     */
@@ -29,8 +34,8 @@ class ScalaApplication {
 
 }
 
-@SpringBootApplication
-@RestController
+@SpringBootApplication(exclude = Array(classOf[ThymeleafAutoConfiguration]))
+@Controller
 @ComponentScan(value = Array(
   "com.bob.scala.*", "com.bob.java.webapi.*"
 ))
@@ -46,9 +51,16 @@ class SampleConfig extends CommandLineRunner {
   @Autowired
   val jsonSerializer: JsonSerializer = null
 
-  @RequestMapping(value = Array("/"), method = Array(RequestMethod.GET))
-  def index(): String = {
-    "hello, welcome come to scala world"
+  @GetMapping(value = Array("/"))
+  def index(model: Model): String = {
+    model.addAttribute("now", LocalDateTime.now())
+    "index"
+  }
+
+  @GetMapping(value = Array("properties"))
+  @ResponseBody
+  def properties(): java.util.Properties = {
+    System.getProperties()
   }
 
   override def run(args: String*): Unit = {
