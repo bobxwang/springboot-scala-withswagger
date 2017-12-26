@@ -56,7 +56,7 @@ class SwaggerConfig {
     new ApiInfoBuilder()
       .title("Spring Boot Using Scala With Swagger")
       .description("User Interface API")
-      .contact("wangxiang@u51.com")
+      .contact("sevenz_da_best@hotmail.com")
       .license("Apache License, Version 2.0")
       .version("1.0")
       .build()
