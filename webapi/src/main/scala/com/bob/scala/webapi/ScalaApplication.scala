@@ -4,8 +4,10 @@ import java.time.LocalDateTime
 
 import com.bob.java.webapi.handler.MdcPropagatingOnScheduleAction
 import com.bob.scala.webapi.controller.User
+import com.bob.scala.webapi.utils.CodeInvoke
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.support.{BeanDefinitionBuilder, DefaultListableBeanFactory}
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
 import org.springframework.boot.{CommandLineRunner, SpringApplication}
@@ -23,15 +25,15 @@ import springfox.documentation.spring.web.json.JsonSerializer
 object ScalaApplication extends App {
 
   RxJavaHooks.setOnScheduleAction(new MdcPropagatingOnScheduleAction)
-
+  println(CodeInvoke.invoke("1 + 1"))
   /**
     * args: _ *:此标注告诉编译器把args中的每个元素当作参数，而不是当作一个当一的参数传递
     */
-  SpringApplication.run(classOf[SampleConfig], args: _ *)
-}
-
-class ScalaApplication {
-
+  private val cp = SpringApplication.run(classOf[SampleConfig], args: _ *)
+  private val bdb = BeanDefinitionBuilder.rootBeanDefinition(classOf[ApplicationContextHolder])
+  cp.getBeanFactory.asInstanceOf[DefaultListableBeanFactory]
+    .registerBeanDefinition("applicationContextHolder", bdb.getBeanDefinition)
+  cp.getBean(classOf[ApplicationContextHolder])
 }
 
 @SpringBootApplication(exclude = Array(classOf[ThymeleafAutoConfiguration]))

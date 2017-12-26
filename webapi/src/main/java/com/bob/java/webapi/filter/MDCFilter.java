@@ -31,7 +31,7 @@ public class MDCFilter extends OncePerRequestFilter {
         String path = urlPathHelper.getPathWithinApplication(request);
         if (path.contains("webjars") || path.contains("swagger")
                 || path.contains("api-docs") || path.contains("configuration")
-                || path.contains("images")) {
+                || path.contains("images") || path.contains("favicon.ico")) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -74,7 +74,6 @@ class ProtostufControllerTest {
       .andExpect(MockMvcResultMatchers.status().isOk())
       .andExpect(new ResultMatcher() {
         def `match`(result: MvcResult) {
-
           val byteResult: Array[Byte] = result.getResponse.getContentAsByteArray
           val schema = RuntimeSchema.getSchema(classOf[String])
           val stubResponse: String = schema.newMessage()

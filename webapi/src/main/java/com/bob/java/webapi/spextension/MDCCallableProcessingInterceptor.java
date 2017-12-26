@@ -31,7 +31,7 @@ public class MDCCallableProcessingInterceptor extends CallableProcessingIntercep
     @Override
     public <T> void preProcess(NativeWebRequest request, Callable<T> task) throws Exception {
         // 经测试,在这已经是工作线程,Tomcat的请求线程已经释放,在这直接拿MDC值的话为空
-        Map map = (Map) request.getAttribute("mdcmap", -1);
+        Map map = (Map<String,String>) request.getAttribute("mdcmap", -1);
         log.info("preProcess client id -> " + map.get(MdcConstans.MDC_ClientRequest_ID));
         log.info("preProcess remote ip -> " + map.get(MdcConstans.MDC_REMOTE_IP));
         MDC.setContextMap(map);

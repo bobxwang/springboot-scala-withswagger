@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>execute</title>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<form id="htmlform" action="/scalaexecute" method="post">
+    <textarea id="content" style="width:300px; height:150px; border:solid 1px #999; border-radius:3px;"
+              placeholder="input the code here"></textarea>
+    <textarea id="response" style="width:300px; height:150px;" disabled></textarea>
+    <div style="width:300PX; margin:0 auto; text-align:right">
+        <input style="display:inline-block; margin:10px 5px; " id="submit" type="button"
+               value="提交"/>
+        <input style="display:inline-block; margin:10px 5px;" id="clean" type="button" value="清空"/>
+    </div>
+</form>
+</body>
+<script type="application/javascript">
+    $(function () {
+        $("#submit").click(function () {
+            onclick();
+        });
+        $("#clean").click(function () {
+            $("#content").val("");
+            $("#response").val("");
+        });
+    });
+
+    function onclick() {
+        var hostUrl = window.location + "";
+        var sqlString = $("#content").val();
+        $.ajax({
+            url: hostUrl,
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            cache: false,
+            async: false,
+            traditional: true,
+            data: JSON.stringify({"content": sqlString}),
+            success: function (json) {
+                var responseStr = JSON.stringify(json);
+                if (responseStr.indexOf("errorMsg") > 0 && responseStr.indexOf("false") > 0) {
+                    $("#response").css("color", "red");
+                } else {
+                    $("#response").css("color", "black");
+                }
+                $("#response").val(responseStr);
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+</html>
