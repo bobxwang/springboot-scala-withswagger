@@ -142,24 +142,23 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.3.1</version>
                 <executions>
-                    <execution>
-                        <id>compile-scala</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile-scala</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
+                  <execution>
+                           <id>scala-compile-first</id>
+                           <phase>process-resources</phase>
+                           <goals>
+                                    <goal>add-source</goal>
+                                    <goal>compile</goal>
+                           </goals>
+                  </execution>
+                  <execution>
+                           <id>scala-test-compile</id>
+                           <phase>process-test-resources</phase>
+                           <goals>
+                                    <goal>testCompile</goal>
+                           </goals>
+                  </execution>
                 </executions>
                 <configuration>
                     <recompileMode>incremental</recompileMode>
