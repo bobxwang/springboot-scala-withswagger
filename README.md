@@ -29,17 +29,17 @@ so everything we no need to care the jar version. also it is ok for using sbt to
 
 * ProtostuffHttpMessageConverter 
 
-  > 使用io.protostuff来进行数据传输
+  > 使用**io.protostuff**来进行数据传输
 
 * ObservableReturnValueHandler 
 
-  > 继承 AsyncHandlerMethodReturnValueHandler类, 使**spring mvc**可以返回Observable<?>类型, 这样可以避免**web server**的连接池被占用而引起性能问题,增加服务器的吞吐量
+  > 继承**AsyncHandlerMethodReturnValueHandler**类, 使**spring mvc**可以返回Observable<?>类型, 这样可以避免**web server**的连接池被占用而引起性能问题,增加服务器的吞吐量
 
 *  MDCSimpleAsyncTaskExecutor/MDCCallableProcessingInterceptor/MdcPropagatingOnScheduleAction
 
-  > 像spring mvc返回Callable/DeferredResult等时,本质上都是为了避免web server线程池被占用,利用非web的服务线程来处理,这个时候如果我们使用了**slf4j**中的**MDC**类时或者**jdk**的**threadlocal**时, 我们需要将请求线程中的一些数据给传递下去, 像**traceid**这种全链路调用标识符, 那我们就需要扩展**CallableProcessingInterceptorAdapter**跟**DeferredResultProcessingInterceptorAdapter**这类型, 在线程执行前后将当前线程的数据给传递到新起来的线程中
+  > 像**spring mvc**返回**Callable/DeferredResult**等类型时,本质上都是为了避免**web server**线程池被占用,利用非web的服务线程来处理,这个时候如果我们使用了**slf4j**中的**MDC**类时或者**jdk**的**threadlocal**时, 我们需要将请求线程中的一些数据给传递下去, 像**traceid**这种全链路调用标识符, 那我们就需要扩展**CallableProcessingInterceptorAdapter**跟**DeferredResultProcessingInterceptorAdapter**这类型, 在线程执行前后将当前线程的数据给传递到新起来的线程中
 
 * others 
 
-  > 如果是spring cloud中, 那我们也可以在跟其它服务进行交互时重写一些, 像**feignClient**中的**RequestInterceptor**拦截器, 在这添加我们自己的特殊处理 
+  > 如果是**spring cloud**中, 那我们也可以在跟其它服务进行交互时重写一些, 像**feignClient**中的**RequestInterceptor**拦截器, 在这添加我们自己的特殊处理 
 
