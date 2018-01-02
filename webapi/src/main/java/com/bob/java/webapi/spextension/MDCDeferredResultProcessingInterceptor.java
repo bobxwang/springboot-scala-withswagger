@@ -14,6 +14,7 @@ import java.util.Map;
  * 想将当前线程MDC值进递,在DeferredResutl中不能像Callable一样,添加拦截器几乎不起作用,几乎可以认定此类是个无用类
  * 如果想传递可以参照CallableController类那样将callable进行转换,或者利用SimpleAsyncTaskExecutor的execute方案来做
  * <p>
+ * 异步返回Callable跟DeferredResult区别 --> DeferredResult是由应用程序其它线程执行返回结果，而Callable是由TaskExecutor执行返回结果
  * Created by bob on 17/2/9.
  */
 public class MDCDeferredResultProcessingInterceptor extends DeferredResultProcessingInterceptorAdapter {
