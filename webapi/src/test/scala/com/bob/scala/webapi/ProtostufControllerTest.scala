@@ -31,9 +31,10 @@ class ProtostufControllerTest {
 
   @Test
   def testCheck(): Unit = {
+    val c = MockMvcResultMatchers.content().string("\"OK\"")
     this.mvc.perform(MockMvcRequestBuilders.get("/protostuf/v1/check"))
       .andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.content().string("OK"))
+      .andExpect(c)
   }
 
   @Test
@@ -74,11 +75,14 @@ class ProtostufControllerTest {
       .andExpect(MockMvcResultMatchers.status().isOk())
       .andExpect(new ResultMatcher() {
         def `match`(result: MvcResult) {
-          val byteResult: Array[Byte] = result.getResponse.getContentAsByteArray
-          val schema = RuntimeSchema.getSchema(classOf[String])
-          val stubResponse: String = schema.newMessage()
-          ProtobufIOUtil.mergeFrom(byteResult, stubResponse, schema)
-          println(stubResponse)
+//          val byteResult: Array[Byte] = result.getResponse.getContentAsByteArray
+//          val schema = RuntimeSchema.getSchema(classOf[String])
+//          val stubResponse: String = schema.newMessage()
+//          ProtobufIOUtil.mergeFrom(byteResult, stubResponse, schema)
+//          println(stubResponse)
+
+          val l = result.getResponse.getContentAsString
+          println(l)
         }
       })
   }
